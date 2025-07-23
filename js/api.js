@@ -62,15 +62,25 @@ const api = {
       const termosEmMaiusculo = termo.toUpperCase()
     
       const pensamentosFiltrados = pensamentos.filter(pensamento => {
-        return (pensamento.conteudo.toLowerCase().includes(termosEmMaiusculo) ||
-          pensamento.autoria.toLowerCase().includes(termosEmMaiusculo))
+        return (pensamento.conteudo.toUpperCase().includes(termosEmMaiusculo) ||
+          pensamento.autoria.toUpperCase().includes(termosEmMaiusculo))
       })
       return pensamentosFiltrados
     } catch{
       alert('Erro ao buscar pensamentos por termo')
       throw error
     }   
+  },
+  async atualizarFavorito(id, favorito) {
+    try {
+      const response = await axios.patch(`${URL_BASE}/pensamentos/${id}`, { favorito })
+      return await response.data
+    } catch (error) {
+      alert('Erro ao atualizar favorito')
+      throw error
+    }
   }
 }
+
 
 export default api
